@@ -1,0 +1,186 @@
+:root {
+  --bg: #ffffff;
+  --fg: #1d1d1f;
+  --muted: #6b6b70;
+  --border: #d9d9de;
+  --field: #f5f5f7;
+  --good: #1f9d55;
+  --warning: #b7791f;
+  --bad: #c53030;
+  --accent: #2b59c3;
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1e1e20;
+    --fg: #ececf1;
+    --muted: #a0a0a8;
+    --border: #3a3a40;
+    --field: #2a2a2e;
+    --good: #48bb78;
+    --warning: #ecc94b;
+    --bad: #fc8181;
+    --accent: #7f9cf5;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 14px 16px 12px;
+  width: 340px;
+  background: var(--bg);
+  color: var(--fg);
+  font: 13px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+h1 {
+  margin: 0 0 10px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+p {
+  margin: 0;
+}
+
+.muted,
+.detail {
+  color: var(--muted);
+}
+
+.status {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.status .title {
+  font-weight: 600;
+}
+
+.dot {
+  flex: none;
+  width: 9px;
+  height: 9px;
+  margin-top: 5px;
+  border-radius: 50%;
+  background: var(--muted);
+}
+
+.status[data-tone="good"] .dot {
+  background: var(--good);
+}
+.status[data-tone="warning"] .dot {
+  background: var(--warning);
+}
+.status[data-tone="bad"] .dot {
+  background: var(--bad);
+}
+
+.notice {
+  margin-bottom: 12px;
+  padding: 8px 10px;
+  border: 1px solid var(--warning);
+  border-radius: 6px;
+}
+
+.notice p {
+  margin-bottom: 8px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 12px;
+}
+
+label {
+  font-weight: 500;
+}
+
+input {
+  margin-bottom: 6px;
+  padding: 6px 8px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--field);
+  color: var(--fg);
+  font: inherit;
+}
+
+#code {
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  font-size: 16px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+button {
+  padding: 6px 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--field);
+  color: var(--fg);
+  font: inherit;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+#pair {
+  align-self: flex-start;
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #fff;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.actions:not(:has(button:not([hidden]))) {
+  display: none;
+}
+
+.error {
+  margin-bottom: 10px;
+  color: var(--bad);
+}
+
+details {
+  color: var(--muted);
+}
+
+summary {
+  cursor: pointer;
+}
+
+details form {
+  margin: 8px 0 0;
+}
+
+.row {
+  display: flex;
+  gap: 8px;
+}
+
+.row input {
+  flex: 1;
+  margin: 0;
+}
+
+[hidden] {
+  display: none !important;
+}

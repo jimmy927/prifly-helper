@@ -1,0 +1,25 @@
+{
+  "manifest_version": 3,
+  "name": "prifly Helper",
+  "version": "0.1.0",
+  "description": "Lets prifly's plugins fetch and run code in your own signed-in browser, paired with prifly on this machine.",
+  "minimum_chrome_version": "135",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtf3iJs5qF8x92MLx+Y0fH3avaW5GlS8boN3YCT+zFXpRbArRDgg8zRemJ7O4hdaaMgY+bHjNc4exdtTluLOpA1QPRzSqraP3bEMRvqrHo/OhrgGnVrNhn1Z5B2pRmHBXB7HATD9f72/vM3ARxPNli3Ni+GlY1kJmVNnOFMo8V3fIPHR7IIf55GcwAAluSxqbqIzZMfjb2xLnO6hq7lkg+tm1Peer9AJITDteia4tAnc5VHORKgIC3XaAQKhnVZv4KidG4NUOnKvzl2Pj2vO2iZDdRZKYJwOEzJj5VlzeQcQ7XlpavDgdvGJ7FH/pTTaQE2uXwTbjdndCRXRc2OiyPwIDAQAB",
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_title": "prifly Helper",
+    "default_popup": "popup.html"
+  },
+  "permissions": [
+    "alarms",
+    "cookies",
+    "declarativeNetRequestWithHostAccess",
+    "storage",
+    "tabs",
+    "userScripts"
+  ],
+  "host_permissions": ["<all_urls>"]
+}

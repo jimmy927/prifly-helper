@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>prifly Helper</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <header>
+      <h1>prifly Helper</h1>
+    </header>
+
+    <section class="status" data-tone="muted" id="status">
+      <span class="dot" aria-hidden="true"></span>
+      <div>
+        <p class="title" id="status-title">Checking…</p>
+        <p class="detail" id="status-detail"></p>
+      </div>
+    </section>
+
+    <section class="notice" id="scripts-off" hidden>
+      <p id="scripts-off-text"></p>
+      <button type="button" id="open-details">Open the Helper's Details page</button>
+    </section>
+
+    <form id="pair-form" hidden>
+      <label for="code">Pairing code</label>
+      <input id="code" name="code" autocomplete="off" spellcheck="false" placeholder="K7F-29QX" />
+      <label for="profile">Name for this browser profile <span class="muted">(optional)</span></label>
+      <input id="profile" name="profile" autocomplete="off" placeholder="Work" />
+      <button type="submit" id="pair">Pair</button>
+    </form>
+
+    <div class="actions">
+      <button type="button" id="retry" hidden>Retry</button>
+      <button type="button" id="pause" hidden>Pause 1 hour</button>
+      <button type="button" id="resume" hidden>Resume</button>
+    </div>
+
+    <p class="error" id="error" role="alert" hidden></p>
+
+    <details id="advanced">
+      <summary>Advanced</summary>
+      <form id="port-form">
+        <label for="port">prifly's port on 127.0.0.1</label>
+        <div class="row">
+          <input id="port" name="port" type="number" min="1" max="65535" />
+          <button type="submit">Save</button>
+        </div>
+      </form>
+    </details>
+
+    <script type="module" src="popup.js"></script>
+  </body>
+</html>

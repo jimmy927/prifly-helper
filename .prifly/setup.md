@@ -1,9 +1,13 @@
 ---
-setup: []
+setup:
+  - bun install --frozen-lockfile
 ---
 
-The repository holds only `README.md` so far: no package manifest, lockfile, toolchain pin or
-CI workflow, so a fresh worktree needs no install. Nothing outside the worktree is relied on.
+One install of the extension's dependencies (zod, and the TypeScript, Bun and Chrome types the
+tests and the typecheck use), pinned by `bun.lock`. `bun test` and `bun run typecheck` run from
+source; `bun run build` writes `dist/`, which only loading the extension needs.
 
-When the extension gets a `package.json` and lockfile, replace `[]` with `seed: npm` (or the
-matching frozen install for whichever package manager it adopts).
+What it relies on outside the worktree:
+- `bun` on PATH, 1.4.2 (the version that wrote `bun.lock`). `--frozen-lockfile` fails if the Bun
+  minor version is different.
+- Network access to the npm registry, or Bun's global cache (`~/.bun/install/cache`).
