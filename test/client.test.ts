@@ -164,19 +164,16 @@ describe("reconnecting", () => {
       retry: true,
     });
 
-    const waits: number[] = [];
-    for (let i = 0; i < 7; i++) {
+    // On the fake clock: no new socket 1 ms before each expected wait, one exactly at it.
+    for (const wait of [1000, 2000, 4000, 8000, 16000, MAX_RETRY_MS, MAX_RETRY_MS]) {
       const before = fake.sockets.length;
-      let waited = 0;
-      while (fake.sockets.length === before) {
-        await fake.clock.advance(500);
-        waited += 500;
-      }
-      waits.push(waited);
+      await fake.clock.advance(wait - 1);
+      expect(fake.sockets.length).toBe(before);
+      await fake.clock.advance(1);
+      expect(fake.sockets.length).toBe(before + 1);
       fake.socket().refuse();
       await settle();
     }
-    expect(waits).toEqual([1000, 2000, 4000, 8000, 16000, MAX_RETRY_MS, MAX_RETRY_MS]);
 
     // Once it opens, the backoff starts over.
     await fake.clock.advance(MAX_RETRY_MS);

@@ -51,9 +51,15 @@ export class FakeClock implements Clock {
   }
 }
 
-/** Let every promise chain that can move, move. */
+/**
+ * Let every promise chain that can move, move. Microtasks plus a few `setImmediate` turns (for
+ * Response bodies): no timer, so it never waits on the wall clock or a 1 ms timer clamp under load.
+ */
 export async function settle(): Promise<void> {
-  for (let i = 0; i < 20; i++) await new Promise<void>((resolve) => setTimeout(resolve, 0));
+  for (let round = 0; round < 5; round++) {
+    for (let i = 0; i < 50; i++) await Promise.resolve();
+    await new Promise<void>((resolve) => setImmediate(resolve));
+  }
 }
 
 export class FakeSocket implements SocketLike {
