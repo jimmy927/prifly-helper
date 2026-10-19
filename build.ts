@@ -38,7 +38,8 @@ const pkg = JSON.parse(await readFile(join(root, "package.json"), "utf8")) as { 
 const manifestPath = join(dist, "manifest.json");
 const manifest = JSON.parse(await readFile(manifestPath, "utf8")) as Record<string, unknown> & {
   background: { service_worker: string };
-  action: { default_popup: string };
+  action: { default_popup: string; default_icon?: Record<string, string> };
+  icons?: Record<string, string>;
 };
 manifest.version = pkg.version;
 await writeFile(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`);
@@ -47,6 +48,8 @@ const popupHtml = await readFile(join(dist, manifest.action.default_popup), "utf
 const referenced = [
   manifest.background.service_worker,
   manifest.action.default_popup,
+  ...Object.values(manifest.icons ?? {}),
+  ...Object.values(manifest.action.default_icon ?? {}),
   ...[...popupHtml.matchAll(/(?:src|href)="([^"]+)"/g)].map((match) => match[1] ?? ""),
 ];
 const missing = referenced.filter((file) => !existsSync(join(dist, file)));

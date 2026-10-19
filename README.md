@@ -38,6 +38,8 @@ bun test           # protocol tests against a fake socket and fake chrome.*
 bun run typecheck
 ```
 
+The icons live in `static/icons` (copied unchanged from prifly's desktop-shell assets).
+
 `dist/` is not committed; prifly's installer clones this repo, runs the two commands above and
 copies `dist/`.
 
