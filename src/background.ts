@@ -13,6 +13,7 @@ import { HelperClient } from "./client";
 import { messageOf } from "./commands/common";
 import type { PopupReply, PopupRequest } from "./messages";
 import { type ChromeApi, type Platform, realClock, type TabInfo } from "./platform";
+import { reloadIfManifestStale } from "./stale-manifest";
 
 const KEEPALIVE = "prifly-helper-keepalive";
 
@@ -152,6 +153,16 @@ chrome.runtime.onMessage.addListener((request: PopupRequest, sender, reply: (r: 
 });
 
 void (async () => {
+  const reloading = await reloadIfManifestStale({
+    readOnDisk: async () => (await fetch(chrome.runtime.getURL("manifest.json"))).text(),
+    loaded: chrome.runtime.getManifest() as unknown as Record<string, unknown>,
+    local: chrome.storage.local,
+    reload: () => chrome.runtime.reload(),
+  }).catch((error: unknown) => {
+    console.warn("prifly Helper: could not compare the manifest on disk", messageOf(error));
+    return false;
+  });
+  if (reloading) return;
   await clearStaleRules().catch((error: unknown) =>
     console.warn("prifly Helper: could not clear old session rules", messageOf(error)),
   );
